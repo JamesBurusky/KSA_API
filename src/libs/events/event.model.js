@@ -4,7 +4,7 @@ const Event = require("../../models/event")(sequelize, Sequelize);
 //const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 
-Event.sync({ force: false });
+Event.sync({ force: true });
 exports.createEvent = (EventsData) => {
   return new Promise(async (resolve, reject) => {
 
