@@ -4,7 +4,7 @@ const Gis = require("../../models/gis")(sequelize, Sequelize);
 //const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 
-Gis.sync({ force: true });
+Gis.sync({ force: false });
 exports.createGis = (GisData) => {
   return new Promise(async (resolve, reject) => {
 
