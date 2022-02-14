@@ -56,3 +56,25 @@ exports.findAllEvents = (req, res) => {
     }
   );
 };
+
+exports.findEventCategory = (req, res) => {
+  EventsModel.findEventCategory().then(
+    (result) => {
+      res.status(200).send(result);
+    },
+    (err) => {
+      res.status(406).send(err);
+    }
+  );
+};
+
+exports.findEventByCategory = (req, res) => {
+  EventsModel.findEventByCategory(req.params.category).then(
+    (result) => {
+      res.status(200).send(result);
+    },
+    (err) => {
+      res.status(406).send(err.message);
+    }
+  );
+};

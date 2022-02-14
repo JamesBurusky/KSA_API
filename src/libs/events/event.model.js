@@ -86,3 +86,40 @@ exports.findAllEvents = () => {
     );
   });
 };
+
+exports.findEventCategory = () => {
+  return new Promise((resolve, reject) => {
+    Event.findAll({
+      attributes:  [Sequelize.fn('DISTINCT', Sequelize.col('Category')) ,'Category'],
+    }).then(
+      (result) => {
+        resolve(result);
+      },
+      (err) => {
+        reject({ error: err });
+      }
+    );
+  });
+};
+
+exports.findEventByCategory = (category) => {
+  return new Promise((resolve, reject) => {
+    Event.findAll(
+      {
+        where: {
+          Category: category,
+        },
+      }
+    ).then(
+      (result) => {
+        if (result == null) {
+          reject({ status: 404, message: "Not found" });
+        }
+        resolve(result);
+      },
+      (err) => {
+        reject({ error: err });
+      }
+    );
+  });
+};

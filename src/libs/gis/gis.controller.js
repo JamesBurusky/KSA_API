@@ -56,3 +56,25 @@ exports.findAllGis = (req, res) => {
     }
   );
 };
+
+exports.findCategory = (req, res) => {
+  GisModel.findCategory().then(
+    (result) => {
+      res.status(200).send(result);
+    },
+    (err) => {
+      res.status(406).send(err);
+    }
+  );
+};
+
+exports.findByCategory = (req, res) => {
+  GisModel.findByCategory(req.params.category).then(
+    (result) => {
+      res.status(200).send(result);
+    },
+    (err) => {
+      res.status(406).send(err.message);
+    }
+  );
+};
