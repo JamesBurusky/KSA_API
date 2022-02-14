@@ -1,6 +1,10 @@
 const GisModel = require("./gis.model");
 
+
 exports.insert = (req, res) => {
+  if (req.file)
+  req.body.Thumbnail =req.file.path;
+
   GisModel.createGis(req.body).then(
     (result) => {
       res.status(200).send({ message: "Gis Created successfully" });
