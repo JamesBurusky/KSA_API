@@ -1,8 +1,9 @@
 const GisController = require("./gis.controller");
+const GisModel = require("./gis.model")
 const verifyToken = require("../Auth/VerifyToken")
 
 exports.GisRoutes = function (app) {
-  app.post("/gis/create", [GisController.insert]);
+  app.post("/gis/create", [GisModel.uploadThumbnail,GisController.insert]);
 
   
   app.get("/gis/category", [GisController.findCategory]);

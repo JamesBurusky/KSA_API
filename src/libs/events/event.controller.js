@@ -1,6 +1,9 @@
 const EventsModel = require("./event.model");
 
 exports.insert = (req, res) => {
+  if (req.file)
+  req.body.Thumbnail =req.file.path;
+
   EventsModel.createEvent(req.body).then(
     (result) => {
       res.status(200).send({ message: "Event Created successfully" });

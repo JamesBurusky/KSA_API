@@ -1,16 +1,43 @@
 const { Sequelize, Op } = require("sequelize");
 const sequelize = require("../../configs/connection");
 const Gis = require("../../models/gis")(sequelize, Sequelize);
-//const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
+const multer = require("multer");
+const Path = require("path");
+
+let upload = multer({
+  limits: { fileSize: 5000000},
+  fileFilter: (req, file, callback) => {
+    const acceptableExtensions = [".png", ".jpg"];
+    if (!acceptableExtensions.includes(Path.extname(file.originalname))) {
+      return callback(new Error("Unsupported format"));
+    }
+    const fileSize = parseInt(req.headers["content-length"]);
+    if (fileSize > 5000000) {
+      return callback(new Error("Image too large"));
+    }
+    callback(null, true);
+  },
+  storage: multer.diskStorage({
+    destination: "uploads/",
+    filename: function (req, file, callback) {
+      callback(null, Date.now() + file.originalname);
+    },
+  }),
+});
 
 Gis.sync({ force: false });
+
+
+exports.uploadThumbnail = upload.single('Thumbnail')
+
 exports.createGis = (GisData) => {
   return new Promise(async (resolve, reject) => {
 
     if (GisData.Title === undefined) {
       return reject({ message: "Body is required!!!" })
     }
+
+    console.log(GisData)
 
     Gis.create(GisData).then(
       (result) => {

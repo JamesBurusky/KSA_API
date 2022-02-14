@@ -1,10 +1,35 @@
 const { Sequelize, Op } = require("sequelize");
 const sequelize = require("../../configs/connection");
 const Event = require("../../models/event")(sequelize, Sequelize);
-//const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
+const multer = require("multer");
+const Path = require("path");
+
+let upload = multer({
+  limits: { fileSize: 5000000},
+  fileFilter: (req, file, callback) => {
+    const acceptableExtensions = [".png", ".jpg"];
+    if (!acceptableExtensions.includes(Path.extname(file.originalname))) {
+      return callback(new Error("Unsupported format"));
+    }
+    const fileSize = parseInt(req.headers["content-length"]);
+    if (fileSize > 5000000) {
+      return callback(new Error("Image too large"));
+    }
+    callback(null, true);
+  },
+  storage: multer.diskStorage({
+    destination: "uploads/events",
+    filename: function (req, file, callback) {
+      callback(null, Date.now() + file.originalname);
+    },
+  }),
+});
 
 Event.sync({ force: false });
+
+
+exports.uploadThumbnail = upload.single('Thumbnail')
+
 exports.createEvent = (EventsData) => {
   return new Promise(async (resolve, reject) => {
 

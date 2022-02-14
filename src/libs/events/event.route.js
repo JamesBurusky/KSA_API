@@ -1,8 +1,9 @@
 const EventsController = require("./event.controller");
+const EventsModel = require("./event.model")
 const verifyToken = require("../Auth/VerifyToken")
 
 exports.EventsRoutes = function (app) {
-  app.post("/events/add", [EventsController.insert]);
+  app.post("/events/add", [EventsModel.uploadThumbnail, EventsController.insert]);
 
   app.get("/events/category", [EventsController.findEventCategory]);
 
