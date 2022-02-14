@@ -17,7 +17,8 @@ exports.createGis = (GisData) => {
         resolve(result);
       },
       (err) => {
-        reject({ message: "User creation failed" });
+        console.log(err)
+        reject({ message: "Creation failed" });
       }
     );
   });
