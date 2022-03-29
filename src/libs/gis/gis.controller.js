@@ -4,6 +4,7 @@ const GisModel = require("./gis.model");
 exports.insert = (req, res) => {
   if (req.file)
   req.body.Thumbnail =req.file.path;
+  //console.log(req.body)
 
   GisModel.createGis(req.body).then(
     (result) => {

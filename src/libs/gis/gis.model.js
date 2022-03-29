@@ -3,12 +3,14 @@ const sequelize = require("../../configs/connection");
 const Gis = require("../../models/gis")(sequelize, Sequelize);
 const multer = require("multer");
 const Path = require("path");
+const { Console } = require("console");
 
 let upload = multer({
   limits: { fileSize: 5000000},
   fileFilter: (req, file, callback) => {
     const acceptableExtensions = [".png", ".jpg"];
     if (!acceptableExtensions.includes(Path.extname(file.originalname))) {
+      console.log(req.body);
       return callback(new Error("Unsupported format"));
     }
     const fileSize = parseInt(req.headers["content-length"]);
@@ -29,6 +31,16 @@ Gis.sync({ force: false });
 
 
 exports.uploadThumbnail = upload.single('Thumbnail')
+
+
+// exports.checklog = (req) => {
+//   return new Promise(async (resolve, reject) => {
+//     console.log("Checklog called..");
+//     console.log("");
+//     console.log(req.body);
+//   });
+// };
+
 
 exports.createGis = (GisData) => {
   return new Promise(async (resolve, reject) => {

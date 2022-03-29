@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken")
 
 Auth.sync({ force: false });
 exports.createAuth = (AuthData) => {
+  console.log(AuthData)
   return new Promise(async (resolve, reject) => {
 
     if(AuthData.Password === undefined){

@@ -42,7 +42,7 @@ exports.createEvent = (EventsData) => {
         resolve(result);
       },
       (err) => {
-        reject({ message: "User creation failed" });
+        reject({ message: "Event creation failed" });
       }
     );
   });

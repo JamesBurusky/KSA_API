@@ -7,7 +7,7 @@ exports.insert = (req, res) => {
     },
     (err) => {
       console.log(err);
-      res.status(406).send(err);
+      res.status(201).send(err);
     }
   );
 };

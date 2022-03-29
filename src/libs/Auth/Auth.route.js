@@ -14,7 +14,7 @@ exports.AuthRoutes = function (app) {
 
   app.delete("/auth/:authID", [verifyToken,AuthController.deleteAuthById]);
 
-  app.get("/auth", [verifyToken,AuthController.findAllAuth]);
+  app.get("/auth", [AuthController.findAllAuth]);
 
 
 };
